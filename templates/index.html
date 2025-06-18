@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Fake Voice Detector</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', sans-serif;
+            background: #eef2f5;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            margin: 0;
+        }
+
+        .container {
+            background: #fff;
+            padding: 40px;
+            border-radius: 15px;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+            text-align: center;
+            width: 90%;
+            max-width: 500px;
+        }
+
+        h1 {
+            margin-bottom: 25px;
+            color: #2c3e50;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 15px;
+            font-size: 16px;
+            font-weight: 500;
+        }
+
+        .file-input {
+            position: relative;
+            overflow: hidden;
+            display: inline-block;
+            background: #007bff;
+            color: white;
+            padding: 12px 25px;
+            border-radius: 30px;
+            cursor: pointer;
+            font-weight: bold;
+            margin-bottom: 20px;
+        }
+
+        .file-input input[type="file"] {
+            position: absolute;
+            left: 0;
+            top: 0;
+            opacity: 0;
+            cursor: pointer;
+        }
+
+        .filename {
+            margin: 10px 0;
+            color: #34495e;
+            font-size: 15px;
+        }
+
+        input[type="submit"] {
+            padding: 12px 30px;
+            background-color: #28a745;
+            color: white;
+            border: none;
+            border-radius: 30px;
+            font-size: 16px;
+            cursor: pointer;
+        }
+
+        .result {
+            margin-top: 30px;
+            font-size: 22px;
+            font-weight: bold;
+            color: #2c3e50;
+        }
+
+        .result.real {
+            color: #28a745;
+        }
+
+        .result.fake {
+            color: #dc3545;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🎙️ Fake Voice Detector</h1>
+
+        <form method="POST" enctype="multipart/form-data" onsubmit="return validateForm()">
+            <label class="file-input">
+                Upload Audio
+                <input type="file" name="file" id="fileInput" accept="audio/*" required>
+            </label>
+            <div class="filename" id="filename"></div>
+            <input type="submit" value="Detect">
+        </form>
+
+        {% if result %}
+        <div class="result {{ result|lower }}">
+            🔍 Prediction: {{ result }}
+        </div>
+        {% endif %}
+    </div>
+
+    <script>
+        const fileInput = document.getElementById("fileInput");
+        const fileNameDisplay = document.getElementById("filename");
+
+        fileInput.addEventListener("change", function () {
+            const file = this.files[0];
+            fileNameDisplay.textContent = file ? `Selected: ${file.name}` : "";
+        });
+
+        function validateForm() {
+            const file = fileInput.files[0];
+            if (!file) {
+                alert("Please select an audio file.");
+                return false;
+            }
+
+            const allowed = ['audio/mpeg', 'audio/wav', 'audio/mp3', 'audio/x-wav'];
+            if (!allowed.includes(file.type)) {
+                alert("Invalid file type. Please upload an MP3 or WAV file.");
+                return false;
+            }
+            return true;
+        }
+    </script>
+</body>
+</html>
