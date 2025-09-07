@@ -1,5 +1,5 @@
-# AIVoiceDetection
-Fake Voice Detection Using Deep Learning
+# DeepFake Voice Detection with Deep Learning
+Fake Voice(AI altered) Detection Using Deep Learning
 Detecting AI-generated voices with MFCC and DNN
 
 I developed a deep learning–based system to detect deepfake audio using Mel Frequency Cepstral Coefficients (MFCCs) as input features and a custom-built Dense Neural Network (DNN). The pipeline includes:
